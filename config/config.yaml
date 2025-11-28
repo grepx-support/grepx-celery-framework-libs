@@ -1,0 +1,12 @@
+# config/config.yaml
+defaults:
+  - celery: default
+  - worker: default
+  - task: default
+  - database: local
+  - _self_
+
+app:
+  name: "stock_analysis_pipeline"
+  version: "1.0.0"
+  environment: ${oc.env:APP_ENV,local}

@@ -1,0 +1,9 @@
+# config/celery/production.yaml
+broker_url: "redis://${oc.env:REDIS_HOST,localhost}:${oc.env:REDIS_PORT,6379}/0"
+result_backend: "redis://${oc.env:REDIS_HOST,localhost}:${oc.env:REDIS_PORT,6379}/1"
+task_serializer: "json"
+result_serializer: "json"
+accept_content:
+  - json
+timezone: "Asia/Kolkata"
+enable_utc: true

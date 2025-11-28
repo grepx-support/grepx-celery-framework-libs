@@ -1,0 +1,3 @@
+# config/worker/default.yaml
+prefetch_multiplier: 1
+max_tasks_per_child: 50

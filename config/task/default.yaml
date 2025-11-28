@@ -1,0 +1,5 @@
+# config/task/default.yaml
+track_started: true
+time_limit: 1800
+soft_time_limit: 1500
+result_expires: 3600
