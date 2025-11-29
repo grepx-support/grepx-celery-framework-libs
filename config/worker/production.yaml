@@ -1,3 +1,0 @@
-# config/worker/production.yaml
-prefetch_multiplier: 4
-max_tasks_per_child: 1000

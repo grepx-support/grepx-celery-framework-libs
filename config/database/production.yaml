@@ -1,6 +1,0 @@
-# config/database/production.yaml
-host: "${oc.env:DB_HOST}"
-port: ${oc.env:DB_PORT,5432}
-name: "${oc.env:DB_NAME}"
-user: "${oc.env:DB_USER}"
-password: "${oc.env:DB_PASSWORD}"
