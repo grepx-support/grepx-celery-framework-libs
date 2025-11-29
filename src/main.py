@@ -1,25 +1,37 @@
-# main.py
-"""Application entry point with Hydra."""
-
+"""Main entry point for Celery framework."""
+import logging
 import hydra
 from omegaconf import DictConfig
+from app import create_app
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+logger = logging.getLogger(__name__)
 
 
-@hydra.main(version_base=None, config_path="config", config_name="config")
-def main(cfg: DictConfig):
-    """Main application entry point."""
+@hydra.main(config_path="../config", config_name="config", version_base=None)
+def main(cfg: DictConfig) -> None:
+    """
+    Main entry point.
 
-    loader = HydraConfigLoader(cfg)
-    app_name = loader.get("app.name", "celery_app")
+    Args:
+        cfg: Hydra configuration
+    """
+    logger.info("Starting Celery Framework")
+    # logger.info(f"Environment: {cfg.app.environment}")
 
-    app, registry = CeleryFactory.create_app(app_name, loader)
+    # Create Celery app
+    celery_app = create_app(cfg)
 
-    # Your application logic here
-    print(f"Environment: {cfg.app.environment}")
-    print(f"Celery Broker: {cfg.celery.broker_url}")
-    print(f"Worker Config: {cfg.worker}")
+    logger.info(f"Registered tasks: {celery_app.list_tasks()}")
+    logger.info("Celery framework ready!")
 
-    return app, registry
+    # Keep the app instance available
+    return celery_app.app
 
 
 if __name__ == "__main__":
