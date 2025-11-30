@@ -2,7 +2,7 @@
 import logging
 import hydra
 from omegaconf import DictConfig
-from app import create_app
+from libs.celery_framework.src.celery_framework.tasks.app import create_app
 
 # Configure logging
 logging.basicConfig(
