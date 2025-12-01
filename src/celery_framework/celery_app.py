@@ -5,7 +5,7 @@ from pathlib import Path
 
 from omegaconf import OmegaConf
 
-from .app import create_app
+from .tasks.app import create_app
 
 # Configure logging
 logging.basicConfig(

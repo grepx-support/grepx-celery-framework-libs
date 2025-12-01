@@ -6,7 +6,7 @@ from omegaconf import DictConfig, OmegaConf
 
 # Handle both relative imports (when used as package) and absolute imports (when run as script)
 try:
-    from .tasks import TaskFactory, TaskRegistry, TaskLoader
+    from ..tasks import TaskFactory, TaskRegistry, TaskLoader
 except ImportError:
     from tasks import TaskFactory, TaskRegistry, TaskLoader
 
