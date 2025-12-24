@@ -41,6 +41,16 @@ class CeleryApp:
         # Add worker settings with proper prefixes
         if 'worker' in self.cfg:
             worker_cfg = OmegaConf.to_container(self.cfg.worker, resolve=True)
+            # Map 'pool' -> 'worker_pool' for Celery compatibility
+            if 'pool' in worker_cfg:
+                celery_config['worker_pool'] = worker_cfg.pop('pool')
+            # Map 'concurrency' -> 'worker_concurrency' for Celery compatibility
+            if 'concurrency' in worker_cfg:
+                celery_config['worker_concurrency'] = worker_cfg.pop('concurrency')
+            # Map 'max_concurrent' -> 'worker_concurrency' for Celery compatibility
+            if 'max_concurrent' in worker_cfg:
+                celery_config['worker_concurrency'] = worker_cfg.pop('max_concurrent')
+            # Add remaining worker settings
             celery_config.update({f"worker_{k}": v for k, v in worker_cfg.items()})
 
         # Add task settings with proper prefixes
@@ -50,7 +60,7 @@ class CeleryApp:
 
         app.conf.update(celery_config)
 
-        logger.info(f"✓ Celery app configured")
+        logger.info(f"[OK] Celery app configured (pool: {celery_config.get('worker_pool', 'default')})")
         return app
 
     def load_tasks(self) -> None:
